@@ -31,7 +31,7 @@ from openpyxl.utils import get_column_letter
 # Configuration
 # ---------------------------------------------------------------------------
 
-DEFAULT_DESKTOP = Path.home() / "Desktop"
+DEFAULT_DESKTOP = Path(r"C:\Python\Polym-electrolyte")
 DEFAULT_OUTPUT  = DEFAULT_DESKTOP / "polymer_electrolyte_data.xlsx"
 MODEL           = "claude-sonnet-4-6"
 
@@ -397,7 +397,7 @@ def parse_args() -> argparse.Namespace:
         description="Extract polymer electrolyte data from PDF articles."
     )
     parser.add_argument(
-        "--desktop-path",
+        "--pdf-path",
         type=Path,
         default=DEFAULT_DESKTOP,
         help=f"Folder containing PDFs (default: {DEFAULT_DESKTOP})",
@@ -423,12 +423,12 @@ def main() -> None:
 
     client = anthropic.Anthropic(api_key=api_key)
 
-    pdf_files = sorted(args.desktop_path.glob("*.pdf"))
+    pdf_files = sorted(args.pdf_path.glob("*.pdf"))
     if not pdf_files:
-        print(f"No PDF files found in: {args.desktop_path}")
+        print(f"No PDF files found in: {args.pdf_path}")
         return
 
-    print(f"Found {len(pdf_files)} PDF(s) in {args.desktop_path}")
+    print(f"Found {len(pdf_files)} PDF(s) in {args.pdf_path}")
     print(f"Output  → {args.output}\n")
 
     all_data: list[dict] = []
