@@ -63,7 +63,7 @@ COLUMN_ORDER = [
 COLUMN_WIDTHS = {
     "doi":                       32,
     "paper_title":               42,
-    "polymer_structure":         26,
+    "polymer_structure":         40,
     "polymer_length":            22,
     "filler":                    22,
     "ionic_salt":                18,
@@ -88,7 +88,10 @@ Each unique sample / experimental condition should become one JSON object.
 Fields to extract (use null when not reported):
   doi                       — DOI string, e.g. "10.1039/c9ta00001a"
   paper_title               — full title of the paper
-  polymer_structure         — chemical name or abbreviation, e.g. "PEO", "PVDF-HFP"
+  polymer_structure         — SMILES string of the repeat unit (monomer) structure,
+                              e.g. "COCCO" for PEO, "CC(F)(F)CC(F)(F)" for PVDF.
+                              If the SMILES cannot be determined, fall back to the
+                              common abbreviation (e.g. "PEO").
   polymer_length            — molecular weight or degree of polymerisation,
                               e.g. "600000 g/mol", "DP=200"
   filler                    — inorganic/organic filler, e.g. "LLZO", "SiO2",
@@ -117,8 +120,9 @@ If the figure contains quantitative experimental data (conductivity plot,
 Arrhenius plot, bar chart, table, etc.) extract every readable data point.
 
 Use these fields (null when not determinable from the image):
-  doi, paper_title, polymer_structure, polymer_length, filler, ionic_salt,
-  ratio_polymer_filler_salt, temperature_C, humidity_percent,
+  doi, paper_title, polymer_structure (SMILES of monomer repeat unit, or
+  abbreviation if SMILES cannot be determined), polymer_length, filler,
+  ionic_salt, ratio_polymer_filler_salt, temperature_C, humidity_percent,
   ionic_conductivity_S_cm, notes
 
 For "notes" describe what the figure shows, e.g.:
